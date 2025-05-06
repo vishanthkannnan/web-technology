@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Stories</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(135deg, #0066cc, #004999);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffdd57 !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #ffdd57 !important;
+            font-weight: bold;
+        }
+
+        .dropdown-menu {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            color: #333 !important;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, #0066cc, #004999);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 18px;
+        }
+
+        /* Story Card Styling */
+        .story-card {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            padding: 20px;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .cta-button {
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #004999;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        /* Blinking Animation */
+        @keyframes blink {
+            0% { background-color: #fff; }
+            50% { background-color: #ffff99; }
+            100% { background-color: #fff; }
+        }
+
+        .blinking {
+            animation: blink 1s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Story Sellers Hub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="browse.html">Browse Stories</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            More
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="about.html">About</a></li>
+                            <li><a class="dropdown-item" href="contact.html">Contact</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Search Form -->
+                <form id="searchForm" class="d-flex">
+                    <input type="text" id="searchInput" class="form-control me-2" placeholder="Search by Author/Book/Year">
+                    <select id="searchCategory" class="form-select me-2">
+                        <option value="author">Author</option>
+                        <option value="book">Book Name</option>
+                        <option value="year">Release Year</option>
+                    </select>
+                    <button type="submit" class="btn btn-light">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="header text-center py-5">
+        <h1>Browse Stories</h1>
+        <p class="lead">Explore a wide range of captivating stories</p>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="story-list">
+            <!-- Story 1 -->
+            <div class="col story-card" data-author="John Doe" data-book="The Magical Journey" data-year="2020">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">The Magical Journey</h5>
+                        <p class="card-text">A fantastical tale of adventure, magic, and mystery. Join the protagonist on a journey to uncover the secrets of a hidden world.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> John Doe</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2020</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.5/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 2 -->
+            <div class="col story-card" data-author="Jane Smith" data-book="The Hero's Path" data-year="2018">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">The Hero's Path</h5>
+                        <p class="card-text">A classic hero's journey filled with challenges, growth, and triumph. Follow the hero's evolution as they face their destiny.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> Jane Smith</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2018</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.0/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 3 -->
+            <div class="col story-card" data-author="Sarah Miller" data-book="Adventure Awaits" data-year="2021">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Adventure Awaits</h5>
+                        <p class="card-text">Embark on an exciting adventure through unknown lands. Will the protagonist find what they're searching for, or will danger await them?</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> Sarah Miller</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2021</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.2/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 4 -->
+            <div class="col story-card" data-author="Mark Taylor" data-book="Whispers in the Dark" data-year="2019">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Whispers in the Dark</h5>
+                        <p class="card-text">A suspenseful thriller where every step could lead to danger. Unravel the mystery of a series of eerie events that keep the protagonist on edge.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> Mark Taylor</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2019</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.7/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 5 -->
+            <div class="col story-card" data-author="Emily Davis" data-book="Echoes of the Past" data-year="2017">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Echoes of the Past</h5>
+                        <p class="card-text">A historical fiction novel that blends the past with the present. Discover the secrets hidden for centuries, waiting to be uncovered.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> Emily Davis</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2017</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.3/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 6 -->
+            <div class="col story-card" data-author="John Richards" data-book="Lost in Time" data-year="2022">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Lost in Time</h5>
+                        <p class="card-text">A sci-fi adventure that takes the protagonist across time and space. Can they find their way back, or are they lost forever?</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> John Richards</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2022</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.8/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 7 -->
+            <div class="col story-card" data-author="Anna Williams" data-book="Silent Storm" data-year="2020">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Silent Storm</h5>
+                        <p class="card-text">A gripping drama where the quietest moments hold the most intense emotions. Experience the storm brewing inside the characters.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> Anna Williams</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2020</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.6/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 8 -->
+            <div class="col story-card" data-author="Brian Scott" data-book="The Forgotten Realm" data-year="2023">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">The Forgotten Realm</h5>
+                        <p class="card-text">A high fantasy adventure where realms collide, and heroes rise to face challenges that could determine the fate of the universe.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> Brian Scott</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2023</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.9/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 9 -->
+            <div class="col story-card" data-author="Laura Johnson" data-book="The Last Horizon" data-year="2016">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">The Last Horizon</h5>
+                        <p class="card-text">A post-apocalyptic journey where survivors fight to create a new future in a world that's slowly dying.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> Laura Johnson</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2016</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.4/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 10 -->
+            <div class="col story-card" data-author="David Moore" data-book="Through the Flames" data-year="2018">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Through the Flames</h5>
+                        <p class="card-text">A tale of resilience and survival, where the protagonist faces a personal crisis that could either break or define them forever.</p>
+                        <div class="story-details" style="display:none;">
+                            <p class="card-text"><strong>Author:</strong> David Moore</p>
+                            <p class="card-text"><strong>Release Year:</strong> 2018</p>
+                            <p class="card-text"><strong>Rating:</strong> 4.1/5</p>
+                        </div>
+                        <a href="javascript:void(0)" class="btn btn-primary show-more">Show More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 vishh Story Sellers Hub | All Rights Reserved</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript to Toggle Show More and Search -->
+    <script>
+        // Toggle Show More/Show Less
+        const showMoreButtons = document.querySelectorAll('.show-more');
+        showMoreButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const storyDetails = this.previousElementSibling; // The story details div
+                if (storyDetails.style.display === 'none') {
+                    storyDetails.style.display = 'block';
+                    this.innerHTML = 'Show Less'; // Change button text
+                } else {
+                    storyDetails.style.display = 'none';
+                    this.innerHTML = 'Show More'; // Revert button text
+                }
+            });
+        });
+
+        // Search functionality
+        const searchForm = document.getElementById('searchForm');
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const searchCategory = document.getElementById('searchCategory').value;
+            const stories = document.querySelectorAll('.story-card');
+            let found = false;
+
+            stories.forEach(story => {
+                const author = story.getAttribute('data-author').toLowerCase();
+                const book = story.getAttribute('data-book').toLowerCase();
+                const year = story.getAttribute('data-year').toLowerCase();
+
+                if ((searchCategory === 'author' && author.includes(searchInput)) ||
+                    (searchCategory === 'book' && book.includes(searchInput)) ||
+                    (searchCategory === 'year' && year.includes(searchInput))) {
+                    
+                    story.style.display = 'block';
+                    if (!found) {
+                        story.classList.add('blinking');
+                        found = true;
+                    }
+                } else {
+                    story.style.display = 'none';
