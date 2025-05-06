@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .registration-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            max-width: 90%;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .input-section {
+            margin-bottom: 18px;
+            position: relative;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            color: #34495e;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #11998e;
+            outline: none;
+            box-shadow: 0 0 10px rgba(17, 153, 142, 0.2);
+        }
+        input[type="checkbox"], input[type="radio"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        .option-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .option-group label {
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+        .validation-error {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        button {
+            width: 48%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .register-btn {
+            background: #27ae60;
+        }
+        .clear-btn {
+            background: #e74c3c;
+        }
+        .register-btn:hover {
+            background: #2ecc71;
+            transform: translateY(-2px);
+        }
+        .clear-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        .register-btn:active, .clear-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-box">
+        <h1>Create Your Account</h1>
+        <form onsubmit="return checkForm()">
+            <!-- Full Name -->
+            <div class="input-section">
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" placeholder="Your complete name">
+                <span id="fullnameError" class="validation-error"></span>
+            </div>
+
+            <!-- Email Address -->
+            <div class="input-section">
+                <label for="emailAddr">Email Address:</label>
+                <input type="email" id="emailAddr" placeholder="Your email address">
+                <span id="emailError" class="validation-error"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="input-section">
+                <label for="pass">Create Password:</label>
+                <input type="password" id="pass" placeholder="Minimum 8 characters">
+                <span id="passwordError" class="validation-error"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="input-section">
+                <label for="passConfirm">Confirm Password:</label>
+                <input type="password" id="passConfirm" placeholder="Retype your password">
+                <span id="confirmPassError" class="validation-error"></span>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="input-section">
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" placeholder="10-digit number">
+                <span id="mobileError" class="validation-error"></span>
+            </div>
+
+            <!-- Birth Date -->
+            <div class="input-section">
+                <label for="birthdate">Date of Birth:</label>
+                <input type="date" id="birthdate">
+                <span id="dobError" class="validation-error"></span>
+            </div>
+
+            <!-- Gender Selection -->
+            <div class="input-section">
+                <label>Gender Identity:</label>
+                <div class="option-group">
+                    <input type="radio" id="genderm" name="gender" value="male">
+                    <label for="genderm">Male</label>
+                </div>
+                <div class="option-group">
+                    <input type="radio" id="genderf" name="gender" value="female">
+                    <label for="genderf">Female</label>
+                </div>
+                <div class="option-group">
+                    <input type="radio" id="gendero" name="gender" value="other">
+                    <label for="gendero">Other</label>
+                </div>
+                <span id="genderError" class="validation-error"></span>
+            </div>
+
+            <!-- Nationality -->
+            <div class="input-section">
+                <label for="nation">Nationality:</label>
+                <select id="nation">
+                    <option value="">Select Your Country</option>
+                    <option value="Canada">Canada</option>
+                    <option value="india" default >india</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Germany">Germany</option>
+                </select>
+                <span id="nationError" class="validation-error"></span>
+            </div>
+
+            <!-- Interests -->
+            <div class="input-section">
+                <label>Your Interests:</label>
+                <div class="option-group">
+                    <input type="checkbox" id="music" name="interests" value="music">
+                    <label for="music">Music</label>
+                </div>
+                <div class="option-group">
+                    <input type="checkbox" id="gaming" name="interests" value="gaming">
+                    <label for="gaming">Gaming</label>
+                </div>
+                <div class="option-group">
+                    <input type="checkbox" id="cooking" name="interests" value="cooking">
+                    <label for="cooking">Cooking</label>
+                </div>
+                <span id="interestsError" class="validation-error"></span>
+            </div>
+
+            <!-- Profile Image -->
+            <div class="input-section">
+                <label for="avatar">Profile Image:</label>
+                <input type="file" id="avatar" accept="image/*">
+                <span id="avatarError" class="validation-error"></span>
+            </div>
+
+            <!-- About You -->
+            <div class="input-section">
+                <label for="about">About You:</label>
+                <textarea id="about" rows="4" placeholder="Brief introduction about yourself"></textarea>
+                <span id="aboutError" class="validation-error"></span>
+            </div>
+
+            <!-- Terms Agreement -->
+            <div class="input-section">
+                <div class="option-group">
+                    <input type="checkbox" id="terms" name="terms">
+                    <label for="terms">I agree to the Terms and Conditions</label>
+                </div>
+                <span id="termsError" class="validation-error"></span>
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="button-group">
+                <button type="submit" class="register-btn">Register Now</button>
+                <button type="reset" class="clear-btn">Clear Form</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function checkForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.validation-error').forEach(el => el.textContent = '');
+
+            // Validate Full Name
+            const fullname = document.getElementById('fullname').value.trim();
+            if (fullname === '') {
+                document.getElementById('fullnameError').textContent = 'Full name is required!';
+                isValid = false;
+            }
+
+            // Validate Email
+            const email = document.getElementById('emailAddr').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email!';
+                isValid = false;
+            }
+
+            // Validate Password
+            const password = document.getElementById('pass').value;
+            if (password.length < 8) {
+                document.getElementById('passwordError').textContent = 'Password must be 8+ characters!';
+                isValid = false;
+            }
+
+            // Validate Confirm Password
+            const confirmPass = document.getElementById('passConfirm').value;
+            if (confirmPass !== password) {
+                document.getElementById('confirmPassError').textContent = 'Passwords must match!';
+                isValid = false;
+            }
+
+            // Validate Mobile
+            const mobile = document.getElementById('mobile').value.trim();
+            if (!/^\d{10}$/.test(mobile)) {
+                document.getElementById('mobileError').textContent = 'Valid 10-digit number required!';
+                isValid = false;
+            }
+
+            // Validate Birth Date
+            const birthdate = document.getElementById('birthdate').value;
+            if (!birthdate) {
+                document.getElementById('dobError').textContent = 'Birth date is required!';
+                isValid = false;
+            }
+
+            // Validate Gender
+            const gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+                document.getElementById('genderError').textContent = 'Please select your gender!';
+                isValid = false;
+            }
+
+            // Validate Nationality
+            const nation = document.getElementById('nation').value;
+            if (nation === '') {
+                document.getElementById('nationError').textContent = 'Please select your country!';
+                isValid = false;
+            }
+
+            // Validate Interests
+            const interests = document.querySelectorAll('input[name="interests"]:checked');
+            if (interests.length === 0) {
+                document.getElementById('interestsError').textContent = 'Select at least one interest!';
+                isValid = false;
+            }
+
+            // Validate Profile Image
+            const avatar = document.getElementById('avatar').files[0];
+            if (!avatar) {
+                document.getElementById('avatarError').textContent = 'Profile image is required!';
+                isValid = false;
+            }
+
+            // Validate About
+            const about = document.getElementById('about').value.trim();
+            if (about === '') {
+                document.getElementById('aboutError').textContent = 'Please tell us about yourself!';
+                isValid = false;
+            }
+
+            // Validate Terms
+            const terms = document.getElementById('terms').checked;
+            if (!terms) {
+                document.getElementById('termsError').textContent = 'You must accept the terms!';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
