@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chocolate Heaven - Adaptive Sales Calculator</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Dancing+Script:wght@700&family=Roboto&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #6d4c41;
+      --secondary-color: #d7ccc8;
+      --accent-color: #a1887f;
+      --dark-chocolate: #3e2723;
+      --milk-chocolate: #8d6e63;
+      --white-chocolate: #efebe9;
+      --highlight: #ffab91;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--dark-chocolate), var(--milk-chocolate));
+      color: var(--white-chocolate);
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      color: #444;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border: 2px solid var(--highlight);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    h2 {
+      font-family: 'Dancing Script', cursive;
+      color: var(--dark-chocolate);
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .subtitle {
+      color: var(--accent-color);
+      font-style: italic;
+      margin-bottom: 20px;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    label {
+      font-weight: 500;
+      color: var(--dark-chocolate);
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .btn-primary {
+      background-color: var(--dark-chocolate);
+      border: none;
+      font-weight: 600;
+      padding: 12px;
+      transition: all 0.3s;
+      letter-spacing: 0.5px;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .btn-primary:hover {
+      background-color: #5d4037;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-secondary {
+      background-color: var(--accent-color);
+      border: none;
+      font-weight: 600;
+      padding: 12px;
+      transition: all 0.3s;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .btn-secondary:hover {
+      background-color: #8d6e63;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .form-select, .form-control, .form-control:focus {
+      border-radius: 8px;
+      padding: 12px;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      border: 1px solid var(--secondary-color);
+      transition: all 0.3s;
+      height: auto;
+    }
+
+    .form-select:focus, .form-control:focus {
+      border-color: var(--highlight);
+      box-shadow: 0 0 0 0.25rem rgba(255, 171, 145, 0.25);
+    }
+
+    .item-list {
+      padding: 0;
+      margin: 20px 0;
+      max-height: 200px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      background-color: var(--white-chocolate);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border-left: 4px solid var(--highlight);
+      transition: all 0.3s;
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
+    }
+
+    .item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .remove-item {
+      color: #ef5350;
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 1.2rem;
+    }
+
+    .checkbox-group {
+      background: var(--white-chocolate);
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid var(--secondary-color);
+      margin: 20px 0;
+    }
+
+    .form-check-input:checked {
+      background-color: var(--dark-chocolate);
+      border-color: var(--dark-chocolate);
+    }
+
+    .form-check-label {
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
+    }
+
+    .result {
+      background: #e8f5e9;
+      border-radius: 10px;
+      padding: 20px;
+      color: #1b5e20;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+      border: 2px dashed #81c784;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .additional-info {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 2px dashed var(--secondary-color);
+    }
+
+    .total-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: var(--dark-chocolate);
+      color: white;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+    }
+
+    .chocolate-icon {
+      color: var(--dark-chocolate);
+      margin-right: 10px;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+    }
+
+    .special-offer {
+      background: #fff3e0;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      border-left: 4px solid #ffb74d;
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
+    }
+
+    .offer-title {
+      color: #e65100;
+      font-weight: 600;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-color);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--dark-chocolate);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      .btn-primary, .btn-secondary {
+        padding: 10px;
+      }
+      
+      .form-select, .form-control {
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      body {
+        padding: 10px;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+      
+      .item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .remove-item {
+        margin-left: 0;
+        margin-top: 5px;
+        align-self: flex-end;
+      }
+      
+      .total-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h2>Chocolate Heaven</h2>
+      <p class="subtitle">Indulge in our premium chocolate selection</p>
+    </div>
+
+    <div class="special-offer">
+      <h5 class="offer-title"><i class="fas fa-gift chocolate-icon"></i> Today's Special Offer</h5>
+      <p>Buy 3 or more items and get 10% discount on your total order! Free gift wrapping on orders above ₹500.</p>
+    </div>
+
+    <div class="mb-4">
+      <label for="item" class="form-label"><i class="fas fa-wine-bottle chocolate-icon"></i> Select Chocolates:</label>
+      <select class="form-select" id="item">
+        <option value="Dark Chocolate|100|The rich, intense flavor of premium cocoa">Dark Chocolate - ₹100</option>
+        <option value="Milk Chocolate|80|Creamy smooth texture with a sweet finish">Milk Chocolate - ₹80</option>
+        <option value="White Chocolate|90|Delicate vanilla notes with cocoa butter">White Chocolate - ₹90</option>
+        <option value="Hazelnut Chocolate|150|Crunchy hazelnuts in silky chocolate">Hazelnut Chocolate - ₹150</option>
+        <option value="Mint Chocolate|120|Refreshing mint infused in dark chocolate">Mint Chocolate - ₹120</option>
+        <option value="Fruit & Nut Chocolate|140|Dried fruits and almonds in milk chocolate">Fruit & Nut Chocolate - ₹140</option>
+        <option value="Sea Salt Caramel|160|Sweet and salty perfection">Sea Salt Caramel - ₹160</option>
+        <option value="Orange Zest Dark|130|Citrusy burst with dark chocolate">Orange Zest Dark - ₹130</option>
+      </select>
+      <small class="text-muted" id="item-description">Select a chocolate to see description</small>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-6 mb-3">
+        <label for="quantity" class="form-label"><i class="fas fa-cubes chocolate-icon"></i> Quantity:</label>
+        <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" min="1" value="1">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="deliveryDate" class="form-label"><i class="fas fa-calendar-alt chocolate-icon"></i> Delivery Date:</label>
+        <input type="date" class="form-control" id="deliveryDate" min="">
+      </div>
+    </div>
+
+    <button class="btn btn-secondary w-100 mb-4" onclick="addToBill()">
+      <i class="fas fa-cart-plus"></i> Add to Order
+    </button>
+
+    <h5><i class="fas fa-receipt chocolate-icon"></i> Your Order Summary</h5>
+    <ul class="item-list" id="itemList">
+      <li class="item empty-cart">Your cart is empty</li>
+    </ul>
+
+    <div class="checkbox-group">
+      <label class="form-label"><i class="fas fa-gift chocolate-icon"></i> Additional Options:</label>
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" id="giftWrapCheck">
+        <label class="form-check-label" for="giftWrapCheck"> Premium Gift Wrapping (+₹30) </label>
+      </div>
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" id="expressCheck">
+        <label class="form-check-label" for="expressCheck"> Express Delivery (+₹50) </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="personalNoteCheck">
+        <label class="form-check-label" for="personalNoteCheck"> Add Personal Note (+₹20) </label>
+      </div>
+    </div>
+
+    <div class="additional-info">
+      <h5><i class="fas fa-user-circle chocolate-icon"></i> Customer Details</h5>
+      <div class="row g-3">
+        <div class="col-md-6 mb-3">
+          <label for="customerName" class="form-label">Full Name:</label>
+          <input type="text" class="form-control" id="customerName" placeholder="Enter your name">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="customerPhone" class="form-label">Phone Number:</label>
+          <input type="tel" class="form-control" id="customerPhone" placeholder="Enter phone number">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="customerAddress" class="form-label">Delivery Address:</label>
+        <textarea class="form-control" id="customerAddress" rows="2" placeholder="Enter delivery address"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="specialInstructions" class="form-label">Special Instructions:</label>
+        <textarea class="form-control" id="specialInstructions" rows="2" placeholder="Any special requests?"></textarea>
+      </div>
+    </div>
+
+    <div class="total-section">
+      <div>
+        <i class="fas fa-shopping-bag"></i> <span id="totalItems">0 Items</span>
+      </div>
+      <div>
+        Total: ₹<span id="runningTotal">0.00</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary w-100 py-3 mt-3" onclick="calculateBill()">
+      <i class="fas fa-calculator"></i> Calculate Final Order
+    </button>
+
+    <div class="result mt-4" id="result">
+      <h4><i class="fas fa-file-invoice-dollar"></i> Order Summary</h4>
+      <div id="billDetails">Add items to your order to see the total</div>
+    </div>
+  </div>
+
+  <script>
+    let billItems = [];
+    
+    // Set minimum delivery date to tomorrow
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const minDate = tomorrow.toISOString().split('T')[0];
+      document.getElementById('deliveryDate').min = minDate;
+      
+      // Show item description when selected
+      document.getElementById('item').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const description = selectedOption.text.split(' - ')[1] || 'No description available';
+        document.getElementById('item-description').textContent = selectedOption.value.split('|')[2] || description;
+      });
+    });
+
+    function addToBill() {
+      const selectedItem = document.getElementById('item').value;
+      const [itemName, itemPrice, itemDesc] = selectedItem.split('|').map((val, idx) => idx === 1 ? parseFloat(val) : val);
+      const quantity = parseInt(document.getElementById('quantity').value) || 1;
+
+      const existingItem = billItems.find(item => item.name === itemName);
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        billItems.push({ 
+          name: itemName, 
+          price: itemPrice, 
+          quantity: quantity,
+          description: itemDesc || 'No description available'
+        });
+      }
+
+      updateItemList();
+      updateRunningTotal();
+    }
+
+    function updateItemList() {
+      const itemList = document.getElementById('itemList');
+      itemList.innerHTML = '';
+
+      if (billItems.length === 0) {
+        itemList.innerHTML = '<li class="item empty-cart">Your cart is empty</li>';
+        return;
+      }
+
+      billItems.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('item');
+        listItem.innerHTML = `
+          <div>
+            <strong>${item.name}</strong>
+            <small class="d-block text-muted">${item.description}</small>
+            <small>₹${item.price.toFixed(2)} × ${item.quantity}</small>
+          </div>
+          <div class="d-flex align-items-center">
+            <strong>₹${(item.price * item.quantity).toFixed(2)}</strong>
+            <span class="remove-item" onclick="removeItem(${index})"><i class="fas fa-times"></i></span>
+          </div>
+        `;
+        itemList.appendChild(listItem);
+      });
+    }
+
+    function removeItem(index) {
+      billItems.splice(index, 1);
+      updateItemList();
+      updateRunningTotal();
+    }
+
+    function updateRunningTotal() {
+      let total = billItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      document.getElementById('runningTotal').textContent = total.toFixed(2);
+      document.getElementById('totalItems').textContent = `${billItems.reduce((sum, item) => sum + item.quantity, 0)} Items`;
+    }
+
+    function calculateBill() {
+      let subtotal = billItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      let discount = 0;
+      let giftWrapFee = 0;
+      let expressFee = 0;
+      let personalNoteFee = 0;
+      let total = subtotal;
+
+      // Apply 10% discount for 3+ items
+      const totalItems = billItems.reduce((sum, item) => sum + item.quantity, 0);
+      if (totalItems >= 3) {
+        discount = subtotal * 0.1;
+      }
+
+      // Additional services
+      if (document.getElementById('giftWrapCheck').checked) {
+        giftWrapFee = 30;
+        // Free gift wrap for orders above 500
+        if (subtotal > 500) giftWrapFee = 0;
+      }
+      if (document.getElementById('expressCheck').checked) expressFee = 50;
+      if (document.getElementById('personalNoteCheck').checked) personalNoteFee = 20;
+
+      total = subtotal - discount + giftWrapFee + expressFee + personalNoteFee;
+
+      const customerName = document.getElementById('customerName').value || 'Anonymous';
+      const customerPhone = document.getElementById('customerPhone').value || 'Not provided';
+      const deliveryAddress = document.getElementById('customerAddress').value || 'Not provided';
+      const deliveryDate = document.getElementById('deliveryDate').value || 'Not specified';
+      const specialInstructions = document.getElementById('specialInstructions').value || 'None';
+
+      document.getElementById('billDetails').innerHTML = `
+        <div class="text-start">
+          <div class="mb-2"><strong>Customer:</strong> ${customerName}</div>
+          <div class="mb-2"><strong>Phone:</strong> ${customerPhone}</div>
+          <div class="mb-2"><strong>Delivery Address:</strong> ${deliveryAddress}</div>
+          <div class="mb-2"><strong>Delivery Date:</strong> ${deliveryDate}</div>
+          <div class="mb-2"><strong>Special Instructions:</strong> ${specialInstructions}</div>
+          <hr>
+          <div class="mb-1"><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</div>
+          ${discount > 0 ? `<div class="mb-1 text-success"><strong>Discount (10% for 3+ items):</strong> -₹${discount.toFixed(2)}</div>` : ''}
+          ${giftWrapFee > 0 ? `<div class="mb-1"><strong>Gift Wrapping:</strong> ₹${giftWrapFee.toFixed(2)}</div>` : 
+           (document.getElementById('giftWrapCheck').checked && subtotal > 500) ? `<div class="mb-1 text-success"><strong>Gift Wrapping:</strong> Free (Order over ₹500)</div>` : ''}
+          ${expressFee > 0 ? `<div class="mb-1"><strong>Express Delivery:</strong> ₹${expressFee.toFixed(2)}</div>` : ''}
+          ${personalNoteFee > 0 ? `<div class="mb-1"><strong>Personal Note:</strong> ₹${personalNoteFee.toFixed(2)}</div>` : ''}
+            <hr>
+          <div class="mt-2" style="font-size: 1.2rem;"><strong>Total Amount:</strong> ₹${total.toFixed(2)}</div>
+          ${total > 1000 ? '<div class="mt-2 text-success"><i class="fas fa-award"></i> Congratulations! You qualify for free shipping!</div>' : ''}
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
